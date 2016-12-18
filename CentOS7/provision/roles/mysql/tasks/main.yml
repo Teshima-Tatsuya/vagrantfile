@@ -1,6 +1,23 @@
 ---
-- name: install MySQL
+- name: install MySQL(mariaDB)
   yum: name={{ item }}  state=latest
   with_items:
-    - mysql
-    - mysql-devel
+    - mariadb
+    - mariadb-server
+    - mariadb-devel
+
+- name: check mysql installed
+  shell: "which mysql"
+  register: mysql_install
+  failed_when: mysql_install.rc not in [0 ,1]
+  changed_when: no
+
+- name: setting mariaDB service
+  shell: systemctl enable mariadb.servise
+  become: yes
+  when: mysql_install.rc == 1
+
+- name: setting mariaDB service
+  shell: systemctl enable mariadb.servise
+  become: yes
+  when: mysql_install.rc == 1

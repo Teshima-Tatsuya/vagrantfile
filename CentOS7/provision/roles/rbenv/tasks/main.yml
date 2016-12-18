@@ -6,6 +6,7 @@
     - git
     - tar
     - gcc
+    - gcc-c++
     - make
     - libffi-devel
     - zlib-devel

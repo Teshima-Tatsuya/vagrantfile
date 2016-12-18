@@ -7,5 +7,6 @@
     - tmux
     - mysql
     - sqlite
+    - nodejs
     - rbenv
     - dotfiles
