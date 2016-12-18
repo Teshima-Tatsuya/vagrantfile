@@ -1,0 +1,63 @@
+---
+- name: Install dependencies
+  yum: pkg={{item}} state=latest
+  become: yes
+  with_items:
+    - git
+    - tar
+    - gcc
+    - make
+    - libffi-devel
+    - zlib-devel
+    - openssl-devel
+    - readline-devel
+
+- name: check installed rbenv
+  shell: "which {{ rbenv_bin_root }}/rbenv"
+  register: rbenv_install
+  failed_when: rbenv_install.rc not in [0 ,1]
+  changed_when: no
+
+- name: Install rbenv
+  git: repo=https://github.com/sstephenson/rbenv.git dest="{{ vagrant_home }}/.rbenv" accept_hostkey=yes
+  when: rbenv_install.rc == 1
+
+- name: Install ruby-build
+  git: repo=https://github.com/sstephenson/ruby-build.git dest="{{ vagrant_home }}/.rbenv/plugins/ruby-build"
+  when: rbenv_install.rc == 1
+
+- name: chmod .rbenv as vagrant
+  file: path="{{ vagrant_home }}/.rbenv" owner=vagrant state=directory recurse=yes
+  when: rbenv_install.rc == 1
+
+- name: add rbenv path
+  lineinfile: >
+    dest="{{ vagrant_home }}/.bashrc"
+    line="export PATH={{ vagrant_home }}/.rbenv/bin:$PATH"
+  when: rbenv_install.rc == 1
+
+- name: set .rbenv path
+  lineinfile: >
+    dest="{{ vagrant_home }}/.bashrc"
+    line='eval "$(rbenv init -)"'
+  when: rbenv_install.rc == 1
+
+- name: install ruby
+  shell: "{{ rbenv_bin_root }}/rbenv install -v 2.3.1"
+  become: no
+  when: rbenv_install.rc == 1
+
+- name: rbenv rehash
+  shell: "{{ rbenv_bin_root }}/rbenv rehash"
+  become: no
+  when: rbenv_install.rc == 1
+
+- name: rbenv global
+  shell: "{{ rbenv_bin_root }}/rbenv global 2.3.1"
+  become: no
+  when: rbenv_install.rc == 1
+
+- name: install bundler
+  gem: name={{item}} state=latest user_install=no executable="{{ vagrant_home }}/.rbenv/shims/gem"
+  with_items:
+    - bundler

@@ -1,0 +1,9 @@
+- name: yum all update
+  yum: name=* state=latest
+
+- name: yum_install_common_packages
+  yum: name={{ item }} state=latest
+  with_items:
+    - vim
+    - wget
+    - git

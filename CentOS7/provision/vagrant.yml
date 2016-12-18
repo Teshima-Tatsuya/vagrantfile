@@ -1,0 +1,11 @@
+---
+- hosts: all
+  become: yes # sudo
+  user: vagrant
+  roles:
+    - common
+    - tmux
+    - mysql
+    - sqlite
+    - rbenv
+    - dotfiles

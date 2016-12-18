@@ -1,0 +1,21 @@
+- name: Checkout my dotfiles
+  git:
+    repo: https://github.com/Teshima-Tatsuya/dotfiles.git
+    dest: "{{ vagrant_home }}/dotfiles"
+
+- name: chmod .rbenv as vagrant
+  file: path="{{ vagrant_home }}/dotfiles" owner=vagrant state=directory recurse=yes
+  changed_when: no
+
+- name: Create symlinks
+  file:
+    src: "{{ vagrant_home }}/dotfiles/{{ item }}"
+    dest: "{{ vagrant_home }}/{{ item }}"
+    state: link
+    force: yes
+  with_items:
+    - .tmux.conf
+    - .zshrc
+    - .gitconfig
+    - .gitignore
+    - .gemrc
