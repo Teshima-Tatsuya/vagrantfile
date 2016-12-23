@@ -1,0 +1,16 @@
+---
+- name: check heroku installed
+  shell: "which /usr/local/heroku/bin/heroku"
+  register: heroku_install
+  failed_when: heroku_install.rc not in [0 ,1]
+  changed_when: no
+
+- name: install heroku with wget
+  shell: wget -qO- https://toolbelt.heroku.com/install.sh | sh
+  when: heroku_install.rc == 1
+
+- name: add heroku path
+  lineinfile: >
+    dest="{{ vagrant_home }}/.bash_profile"
+    line="export PATH=/usr/local/heroku/bin:$PATH"
+  when: heroku_install.rc == 1

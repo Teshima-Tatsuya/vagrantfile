@@ -1,7 +1,7 @@
 ---
 - name: download libevent source
   get_url:
-    url=https://github.com/libevent/libevent/releases/download/release-2.0.22-stable/libevent-2.0.22-stable.tar.gz
+    url="https://github.com/libevent/libevent/releases/download/release-2.0.22-stable/libevent-2.0.22-stable.tar.gz"
     dest="{{ src_dir }}/libevent-2.0.22-stable.tar.gz"
 
 - name: extract libevent source

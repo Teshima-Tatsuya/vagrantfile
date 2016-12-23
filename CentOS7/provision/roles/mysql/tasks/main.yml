@@ -6,18 +6,8 @@
     - mariadb-server
     - mariadb-devel
 
-- name: check mysql installed
-  shell: "which mysql"
-  register: mysql_install
-  failed_when: mysql_install.rc not in [0 ,1]
-  changed_when: no
+- name: enable mariaDB service
+  service: name=mariadb enabled=yes
 
-- name: setting mariaDB service
-  shell: systemctl enable mariadb.servise
-  become: yes
-  when: mysql_install.rc == 1
-
-- name: setting mariaDB service
-  shell: systemctl enable mariadb.servise
-  become: yes
-  when: mysql_install.rc == 1
+- name: start mariaDB service
+  service: name=mariadb state=started
