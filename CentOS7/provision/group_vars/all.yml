@@ -6,7 +6,7 @@ src_dir: "/usr/local/src"
 
 git_ver: "2.5.0"
 zsh_ver: "5.0.8"
-tmux_ver: "2.0"
+tmux_ver: "2.1"
 
 ruby_version: "2.3.1"
 rbenv_bin_root: "/home/vagrant/.rbenv/bin"
