@@ -1,0 +1,20 @@
+---
+- name: install dependencies package
+  yum: name={{ item }}  state=latest
+  with_items:
+    - lua-devel
+    - ncurses-devel
+
+- name: git clone vim latest
+  git: repo=https://github.com/vim/vim.git dest="{{ src_dir }}/vim" accept_hostkey=yes
+
+- name: install vim
+  shell: >
+    {{ item }}
+    chdir="{{ src_dir }}/vim"
+    creates=/usr/local/bin/vim
+  with_items:
+    - make distclean
+    - ./configure
+    - make
+    - make install
