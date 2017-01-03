@@ -21,3 +21,4 @@
     - .gemrc
     - .vimrc
     - .vim
+    - .tmuxinator

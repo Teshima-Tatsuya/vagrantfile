@@ -4,7 +4,6 @@
   user: vagrant
   roles:
     - common
-    - tmux
     - mysql
     - sqlite
     - nodejs
@@ -12,3 +11,4 @@
     - dotfiles
     - heroku
     - vim
+    - tmux

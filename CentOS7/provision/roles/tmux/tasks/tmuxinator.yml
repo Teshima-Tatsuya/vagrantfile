@@ -7,3 +7,13 @@
   lineinfile: >
     dest="{{ vagrant_home }}/.bashrc"
     line="source ~/.tmuxinator/tmuxinator.bash"
+
+- name: export EDITOR
+  lineinfile: >
+    dest="{{ vagrant_home }}/.bashrc"
+    line="export EDITOR=vim"
+
+- name: alias tmux
+  lineinfile: >
+    dest="{{ vagrant_home }}/.bashrc"
+    line="alias tmux='tmux -2'"
