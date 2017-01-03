@@ -1,0 +1,9 @@
+- name: install tmuxinator
+  gem: name={{item}} state=latest user_install=no executable="{{ vagrant_home }}/.rbenv/shims/gem"
+  with_items:
+    - tmuxinator
+
+- name: add tmuxinator setting
+  lineinfile: >
+    dest="{{ vagrant_home }}/.bashrc"
+    line="source ~/.tmuxinator/tmuxinator.bash"
