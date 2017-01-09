@@ -15,6 +15,6 @@
     creates=/usr/local/bin/vim
   with_items:
     - make distclean
-    - ./configure
+    - ./configure --prefix=/usr/local --with-features=huge --enable-multibyte --enable-rubyinterp --enable-luainterp --enable-cscope --enable-fail-if-missing --with-ruby-command=/home/vagrant/.rbenv/shims/ruby
     - make
     - make install
